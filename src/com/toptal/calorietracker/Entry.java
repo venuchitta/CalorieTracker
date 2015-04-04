@@ -1,37 +1,33 @@
-package org.michaelevans.todo;
+package com.toptal.calorietracker;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import com.parse.*;
 
 @ParseClassName("Entry")
 public class Entry extends ParseObject{
-
 	public Entry()
 	{
 		super();
 	}
 
-	public Entry(String date, String time,String text, double calorieNo) {
+	public Entry(Date date,String text, double calorieNo) throws ParseException {
 		super();
 		setDate(date);
-		setTime(time);
 		setText(text);
 		setCalorieNo(calorieNo);
 	}
 
-	public String getDate() {
-		return getString("date");
+	public Date getDate() {
+		return (Date) this.get("date");
 	}
 	
-	public void setDate(String date) {
+	public void setDate(Date date) throws ParseException {
 		put("date",date);
 	}
-	public String getTime() {
-		return getString("time");
-	}
-	public void setTime(String time) {
-		put("time",time);
-	}
+	
 	public String getText() {
 		return getString("text");
 	}

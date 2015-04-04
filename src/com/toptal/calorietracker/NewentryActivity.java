@@ -1,7 +1,10 @@
-package org.michaelevans.todo;
+package com.toptal.calorietracker;
 
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import com.toptal.calorietracker.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,11 +38,12 @@ public class NewentryActivity  extends Activity implements OnClickListener {
 	private EditText textString,calorieString,dateString,timeString;
 	Button btnCalendar, btnTimePicker;
 	private int mYear, mMonth, mDay, mHour, mMinute;
-
+	Date today,timeNow;
+	SimpleDateFormat df,df1,com;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.entry_screen_edit);
+		setContentView(R.layout.entry_screen_m);
 		textString = (EditText) findViewById(R.id.editText1);
 		calorieString = (EditText) findViewById(R.id.editText2);
 		dateString = (EditText) findViewById(R.id.EditText01);
@@ -48,13 +52,21 @@ public class NewentryActivity  extends Activity implements OnClickListener {
 		btnTimePicker = (Button) findViewById(R.id.button2);
 		btnCalendar.setOnClickListener(this);
 		btnTimePicker.setOnClickListener(this);
-		SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-		SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
-		Date today = Calendar.getInstance().getTime();        
+		 df = new SimpleDateFormat("dd-MM-yyyy");
+		 df1 = new SimpleDateFormat("HH:mm");
+		 com = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+		today = Calendar.getInstance().getTime();    
+		timeNow = Calendar.getInstance().getTime();    
 		String date = df.format(today);
-		String time = df1.format(today);
+		String time = df1.format(timeNow);
 		dateString.setText(date);
 		timeString.setText(time);
+		try {
+			today=df.parse(dateString.getText().toString());
+		} catch (java.text.ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void onClick(View v) {
@@ -71,7 +83,6 @@ public class NewentryActivity  extends Activity implements OnClickListener {
 						int monthOfYear, int dayOfMonth) {
 					dateString.setText(String.format("%02d",dayOfMonth) + "-"
 							+ String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%04d",year));
-
 				}
 			}, mYear, mMonth, mDay);
 			dpd.show();
@@ -97,22 +108,25 @@ public class NewentryActivity  extends Activity implements OnClickListener {
 
 
 	// TODO: Add toast
-	public void entryButtonClicked(View v) {	
+	public void entryButtonClicked(View v) throws java.text.ParseException {	
 		if (textString.getText().length() > 0&&calorieString.getText().length()>0){
+			String concat = dateString.getText().toString() + " "+timeString.getText().toString();
+			today=com.parse(concat);
+			Log.e("concat",today.toString());
+
 			Entry entry = new Entry();
-			entry.setDate(dateString.getText().toString());
-			entry.setTime(timeString.getText().toString());
+			entry.setDate(today);
 			entry.setCalorieNo(Double.parseDouble(calorieString.getText().toString()));
 			entry.setText(textString.getText().toString());
 			entry.setOwner(ParseUser.getCurrentUser());
 			try {
+				Log.e("date",entry.getDate().toString());
 				entry.save();
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			TodoActivity.updateData();
-
 			Intent intent1 = new Intent(this,TodoActivity.class);
 			startActivity(intent1);
 			finish();

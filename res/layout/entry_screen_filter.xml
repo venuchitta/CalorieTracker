@@ -1,8 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="center_vertical"
     android:orientation="vertical" >
-    
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="From"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/EditText01"
+        android:layout_alignBottom="@+id/EditText01"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignParentRight="true"
+        android:text="Calender" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:text="To"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+      <Button
+          android:id="@+id/Button01"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBaseline="@+id/EditText03"
+          android:layout_alignBottom="@+id/EditText03"
+          android:layout_alignLeft="@+id/button1"
+          android:layout_alignParentRight="true"
+          android:text="Calender" />
+
+      <EditText
+          android:id="@+id/EditText04"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_below="@+id/Button01"
+          android:layout_marginTop="14dp"
+          android:layout_toLeftOf="@+id/Button01"
+          android:ems="9"
+          android:text="Time" />
+
+      <EditText
+          android:id="@+id/EditText02"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/button1"
+          android:layout_marginTop="22dp"
+          android:ems="9"
+          android:text="Time" />
+
+      <Button
+          android:id="@+id/button2"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentRight="true"
+          android:layout_alignTop="@+id/EditText02"
+          android:layout_toRightOf="@+id/TextView01"
+          android:text="Time Picker" />
+
+      <EditText
+          android:id="@+id/EditText01"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/textView1"
+          android:layout_marginTop="14dp"
+          android:ems="9"
+          android:text="Date" />
+
+      <EditText
+          android:id="@+id/EditText03"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentLeft="true"
+          android:layout_below="@+id/TextView01"
+          android:layout_marginTop="26dp"
+          android:ems="9"
+          android:text="Date" />
+
+      <Button
+          android:id="@+id/Button02"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignLeft="@+id/Button01"
+          android:layout_alignParentRight="true"
+          android:layout_alignTop="@+id/EditText04"
+          android:text="Time Picker" />
+
+      <Button
+          android:id="@+id/button3"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentBottom="true"
+          android:layout_marginBottom="34dp"
+          android:layout_marginRight="19dp"
+          android:layout_toLeftOf="@+id/textView1"
+          android:onClick="filterResults"
+          android:text="Filter" />
+
+      <Button
+          android:id="@+id/button4"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignBottom="@+id/button3"
+          android:layout_toRightOf="@+id/textView1"
+          android:text="Cancel" />
+
+</RelativeLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="org.michaelevans.todo"
+    package="com.toptal.calorietracker"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="org.michaelevans.todo.TodoActivity"
+            android:name="com.toptal.calorietracker.TodoActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,20 +26,24 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.michaelevans.todo.LoginActivity"
+            android:name="com.toptal.calorietracker.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
         <activity
-            android:name="org.michaelevans.todo.EditEntryActivity"
+            android:name="com.toptal.calorietracker.EditEntryActivity"
             android:label="@string/title_activity_edit" >
         </activity>
         <activity
-            android:name="org.michaelevans.todo.NewentryActivity"
+            android:name="com.toptal.calorietracker.NewentryActivity"
             android:label="@string/title_activity_new" >
         </activity>
         <activity
-            android:name="org.michaelevans.todo.RegisterActivity"
-            android:label="@string/title_activity_register" >
+            android:name="com.toptal.calorietracker.FilterResultsActivity"
+            android:label="@string/action_filter" >
+        </activity>
+        <activity
+            android:name="com.toptal.calorietracker.FilterResultsDisplayActivity"
+            android:label="@string/action_filter" >
         </activity>
     </application>
 

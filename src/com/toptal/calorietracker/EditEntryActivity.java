@@ -1,5 +1,10 @@
-package org.michaelevans.todo;
+package com.toptal.calorietracker;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
+import com.toptal.calorietracker.R;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -14,10 +19,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
+import android.widget.AdapterView.OnItemClickListener;
 
 public class EditEntryActivity extends Activity implements OnClickListener {
 	private EditText textString,calorieString,dateString,timeString;
@@ -25,6 +32,9 @@ public class EditEntryActivity extends Activity implements OnClickListener {
 	private int mYear, mMonth, mDay, mHour, mMinute;
 	private Entry entry;
 	private String objectid;
+	SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+	SimpleDateFormat df1 = new SimpleDateFormat("HH:mm");
+	Date date,time;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,15 +50,22 @@ public class EditEntryActivity extends Activity implements OnClickListener {
 		
 		
 		if (intent.getExtras() != null) {
-			entry = new Entry(intent.getStringExtra("date"), intent.getStringExtra("time"),
-					intent.getStringExtra("text"),intent.getDoubleExtra("calorieNo",0.0 ));
-			dateString.setText(entry.getDate());
-			timeString.setText(entry.getTime());
+			try {
+				entry = new Entry((Date)intent.getSerializableExtra("date"), 
+						intent.getStringExtra("text"),intent.getDoubleExtra("calorieNo",0.0 ));
+			} catch (java.text.ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			dateString.setText(df.format(entry.getDate()));
+			timeString.setText(df1.format(entry.getDate()));
 			textString.setText(entry.getText());
 			calorieString.setText(String.valueOf(entry.getCalorieNo()));
 			objectid=intent.getStringExtra("objectid");
 			btnCalendar.setOnClickListener(this);
 			btnTimePicker.setOnClickListener(this);
+			date=entry.getDate();
+			time = entry.getDate();
 		}
 	}
 
@@ -62,8 +79,18 @@ public class EditEntryActivity extends Activity implements OnClickListener {
 					if (e == null) {
 						post.setText(textString.getText().toString());
 						post.setCalorieNo(Double.parseDouble(calorieString.getText().toString()));
-						post.setDate(dateString.getText().toString());
-						post.setTime(timeString.getText().toString());
+						try {
+							Date temp1 = df.parse(dateString.getText().toString());
+							Date temp = df1.parse(timeString.getText().toString());
+							temp1.setHours(temp.getHours());
+							temp1.setMinutes(temp.getMinutes());
+							post.setDate(temp1);
+
+						} catch (java.text.ParseException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+			
 						post.setOwner(ParseUser.getCurrentUser());
 						//setProgressBarIndeterminateVisibility(true);
 							try {
@@ -85,13 +112,19 @@ public class EditEntryActivity extends Activity implements OnClickListener {
 
 	public void deleteButtonPressed(View v)
 	{
+		Log.e("ObjectId",objectid.toString());
 		Entry.createWithoutData(Entry.class, objectid).deleteEventually();
+		Intent intent1 = new Intent(this,TodoActivity.class);
+		TodoActivity.updateData();
+		startActivity(intent1);
+		finish();
 	}
 
 	public void onClick(View v) {
 		Calendar c;
 		if (v == btnCalendar) {
 			c = Calendar.getInstance();
+			c.setTime(date);
 			mYear = c.get(Calendar.YEAR);
 			mMonth = c.get(Calendar.MONTH);
 			mDay = c.get(Calendar.DAY_OF_MONTH);
@@ -102,6 +135,12 @@ public class EditEntryActivity extends Activity implements OnClickListener {
 						int monthOfYear, int dayOfMonth) {
 					dateString.setText(String.format("%02d",dayOfMonth) + "-"
 							+ String.format("%02d",(monthOfYear + 1)) + "-" + String.format("%04d",year));
+					try {
+						date=df.parse(dateString.getText().toString());
+					} catch (java.text.ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 				}
 			}, mYear, mMonth, mDay);
@@ -111,6 +150,7 @@ public class EditEntryActivity extends Activity implements OnClickListener {
 
 			// Process to get Current Time
 			c = Calendar.getInstance();
+			c.setTime(time);
 			mHour = c.get(Calendar.HOUR_OF_DAY);
 			mMinute = c.get(Calendar.MINUTE);
 			TimePickerDialog tpd = new TimePickerDialog(this,
@@ -120,11 +160,18 @@ public class EditEntryActivity extends Activity implements OnClickListener {
 				public void onTimeSet(TimePicker view, int hourOfDay,
 						int minute) {
 					timeString.setText(String.format("%02d",hourOfDay) + ":" + String.format("%02d",minute));
+					try {
+						time=df.parse(timeString.getText().toString());
+					} catch (java.text.ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}, mHour, mMinute, false);
 			tpd.show();
 		}
 	}
+
 
 
 

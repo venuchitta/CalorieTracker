@@ -1,4 +1,6 @@
-package org.michaelevans.todo;
+package com.toptal.calorietracker;
+
+import com.toptal.calorietracker.R;
 
 import android.app.Activity;
 import android.content.Intent;

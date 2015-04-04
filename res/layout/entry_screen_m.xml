@@ -85,7 +85,6 @@
         android:layout_alignBottom="@+id/button3"
         android:layout_marginLeft="38dp"
         android:layout_toRightOf="@+id/button3"
-        android:onClick="deleteButtonPressed"
-        android:text="Delete" />
+        android:text="Cancel" />
 
 </RelativeLayout>

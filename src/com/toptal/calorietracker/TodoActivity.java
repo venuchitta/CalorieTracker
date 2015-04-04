@@ -1,4 +1,4 @@
-package org.michaelevans.todo;
+package com.toptal.calorietracker;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,8 +29,8 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.ParseQuery.CachePolicy;
-import org.michaelevans.*;
-import org.michaelevans.todo.R;;
+import com.toptal.calorietracker.R;
+
 
 public class TodoActivity extends Activity implements OnItemClickListener {
 
@@ -58,6 +59,11 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 		mListView.setAdapter(mAdapter);
 		mListView.setOnItemClickListener(this);
 		updateData();
+		View someView = findViewById(R.id.listView1);
+		  View root = someView.getRootView();
+
+		  // Set the color
+		  root.setBackgroundColor(getResources().getColor(android.R.color.darker_gray));
 	}
 	
 	protected void onResume (Bundle savedInstanceState) {
@@ -85,6 +91,8 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 				}
 			}
 		});
+
+	
 	}
 
 
@@ -110,7 +118,7 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 			TodoActivity.updateData();
 			return true;
 		case R.id.action_filter: 
-			Intent intent2 = new Intent(this, FilterResults.class);
+			Intent intent2 = new Intent(this, FilterResultsActivity.class);
 			startActivity(intent2);
 			return true;
 		
@@ -123,7 +131,6 @@ public class TodoActivity extends Activity implements OnItemClickListener {
 		Entry entry = mAdapter.getItem(position);
 		Intent intent = new Intent(this, EditEntryActivity.class);
 		intent.putExtra("date", entry.getDate());
-		intent.putExtra("time", entry.getTime());
 		intent.putExtra("text", entry.getText());
 		intent.putExtra("objectid", entry.getObjectId());
 		intent.putExtra("calorieNo", entry.getCalorieNo());
